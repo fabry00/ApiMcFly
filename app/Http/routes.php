@@ -30,6 +30,11 @@ Route::post('attach-permission', 'JwtAuthenticateController@attachPermission');
 Route::group(['prefix' => 'api', 'middleware' => ['ability:admin,create-users']], function()
 {
     // Protected route
+    // Entrust already has a EntrutAbility that can be seen here but the 
+    // problem is that it works with sessions and not tokens.
+    // What we can do is extend the JWT's middleware to include Entrust's and 
+    // work with a token, not session.
+    // php artisan make:middleware TokenEntrustAbility
     Route::get('users', 'JwtAuthenticateController@index');
 });
 
