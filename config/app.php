@@ -213,7 +213,7 @@ return [
          * Added for Json Web Token Authentication
          * @author Fabrizio
          */
-        'JWTAuth'   => Tymon\JWTAuthFacades\JWTAuth::class,
+        'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class,
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
 
