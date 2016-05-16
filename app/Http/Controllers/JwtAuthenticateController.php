@@ -26,6 +26,7 @@ class JwtAuthenticateController extends Controller {
      * @return type
      */
     public function index() {
+        Log::info(get_class($this) . '::index');
         return response()->json(['auth' => Auth::user(), 'users' => User::all()]);
     }
 
@@ -36,6 +37,7 @@ class JwtAuthenticateController extends Controller {
      * @return type
      */
     public function authenticate(Request $request) {
+        Log::info(get_class($this) . '::authenticate');
         $credentials = $request->only('email', 'password');
 
         try {
@@ -52,8 +54,30 @@ class JwtAuthenticateController extends Controller {
         return response()->json(compact('token'));
     }
 
+    /**
+     * Return the authenticated user
+     *
+     * @return Response
+     */
+    public function getAuthenticatedUser() {
+        Log::info(get_class($this) . '::getAuthenticatedUser');
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['token_expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['token_absent'], $e->getStatusCode());
+        }
+        // the token is valid and we have found the user via the sub claim
+        return response()->json(compact('user'));
+    }
+
     public function createRole(Request $request) {
-        Log::info('createRole');
+        Log::info(get_class($this) . '::createRole');
         // TODO do some protective checks before saving
         $role = new Role();
         $role->name = $request->input('name');
@@ -63,7 +87,7 @@ class JwtAuthenticateController extends Controller {
     }
 
     public function createPermission(Request $request) {
-        Log::info('createPermission');
+        Log::info(get_class($this) . '::createPermission');
         // TODO do some protective checks before saving
         $viewUsers = new Permission();
         $viewUsers->name = $request->input('name');
@@ -77,7 +101,7 @@ class JwtAuthenticateController extends Controller {
      * @param Request $request
      */
     public function assignRole(Request $request) {
-        Log::info('assignRole');
+        Log::info(get_class($this) . '::assignRole');
         $user = User::where('email', '=', $request->input('email'))->first();
 
         $role = Role::where('name', '=', $request->input('role'))->first();
@@ -88,11 +112,12 @@ class JwtAuthenticateController extends Controller {
     }
 
     public function attachPermission(Request $request) {
+        Log::info(get_class($this) . '::attachPermission');
         $role = Role::where('name', '=', $request->input('role'))->first();
         $permission = Permission::where('name', '=', $request->input('name'))->first();
         $role->attachPermission($permission);
 
-        return response()->json("created");       
+        return response()->json("created");
     }
 
 }
