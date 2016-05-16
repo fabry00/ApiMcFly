@@ -2,7 +2,7 @@
 namespace database\seeds;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
@@ -13,8 +13,8 @@ use App\Models\User;
 class UsersTableSeeder extends Seeder {
 
     public function run() {
-
-        DB::table('users')->delete();
+        // Not needed. Db already cleaned in DatabaseSeeder.php
+        //DB::table('users')->delete(); 
 
         
         $users = array(

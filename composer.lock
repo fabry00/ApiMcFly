@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1c348f0c0df11c36ccbc14a9011db0be",
-    "content-hash": "68ae6c7a4e9870362fb2e4b337f5f5a7",
+    "hash": "e0767f5bd25888aa8b3d588477011c18",
+    "content-hash": "7009771aadac0ac84b75be722d439e2e",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1991,22 +1991,23 @@
         },
         {
             "name": "zizaco/entrust",
-            "version": "dev-laravel-5",
+            "version": "5.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Zizaco/entrust.git",
-                "reference": "3936ecf81efe2e124998b657a7adf03106e279e6"
+                "reference": "b749bff868026336dec1ba1a16c150728697353d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/3936ecf81efe2e124998b657a7adf03106e279e6",
-                "reference": "3936ecf81efe2e124998b657a7adf03106e279e6",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/b749bff868026336dec1ba1a16c150728697353d",
+                "reference": "b749bff868026336dec1ba1a16c150728697353d",
                 "shasum": ""
             },
             "require": {
+                "illuminate/cache": "~5.0",
                 "illuminate/console": "~5.0",
                 "illuminate/support": "~5.0",
-                "php": ">=5.4.0"
+                "php": ">=5.5.0"
             },
             "require-dev": {
                 "illuminate/database": "~5.0",
@@ -2054,7 +2055,7 @@
                 "permission",
                 "roles"
             ],
-            "time": "2016-03-05 04:51:31"
+            "time": "2016-03-24 15:24:42"
         }
     ],
     "packages-dev": [

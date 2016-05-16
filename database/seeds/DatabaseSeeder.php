@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use database\seeds\UsersTableSeeder;
+use database\seeds\RolesTableSeeder;
+use database\seeds\PermissionsTableSeeder;
 
 /**
  * WARNING
@@ -39,8 +41,9 @@ class DatabaseSeeder extends Seeder {
         Model::unguard();
 
         
-        // Users
         $this->call(UsersTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
 
         Model::reguard();
     }
