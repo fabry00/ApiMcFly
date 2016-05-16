@@ -14,3 +14,24 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route to create a new role
+Route::post('role', 'JwtAuthenticateController@createRole');
+// Route to create a new permission
+Route::post('permission', 'JwtAuthenticateController@createPermission');
+// Route to assign role to user
+Route::post('assign-role', 'JwtAuthenticateController@assignRole');
+// Route to attach permission to a role
+Route::post('attach-permission', 'JwtAuthenticateController@attachPermission');
+
+// API route group that we need to protect
+// We are just saying that we need the user to be an admin or have the 
+// create-users permissions before they can access the routes in this group.
+Route::group(['prefix' => 'api', 'middleware' => ['ability:admin,create-users']], function()
+{
+    // Protected route
+    Route::get('users', 'JwtAuthenticateController@index');
+});
+
+// Authentication route
+Route::post('authenticate', 'JwtAuthenticateController@authenticate');
