@@ -50,7 +50,8 @@ class DatabaseSeeder extends Seeder {
      */
     public function truncateTables()
     {
-        $dbName = env('DB_DATABASE');
+        $dbName = env('DB_DATABASE', 'apimcfly');
+        $this->command->info('truncateTables in :'.$dbName);
         // Get all tables list, except migrations table
         $tables = DB::select('SHOW TABLES WHERE `Tables_in_' . $dbName . '` != ?', ['migrations']);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
