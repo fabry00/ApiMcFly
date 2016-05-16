@@ -25,6 +25,7 @@ class RolesTableSeeder extends Seeder {
             Role::create($role);
         }
 
+        $this->command->info('Roles added: '.Role::count());
         $this->command->info('Role table seeded!');
     }
 

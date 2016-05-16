@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder {
 
         
         $users = array(
+            ['name' => 'Admin',  'email' => 'admin@test.com', 'password' => Hash::make('admin')],
             ['name' => 'User 1', 'email' => 'user@test.com', 'password' => Hash::make('test')],
             ['name' => 'User 2', 'email' => 'user2@test.com', 'password' => Hash::make('test2')],
             ['name' => 'User 3', 'email' => 'user3@test.com', 'password' => Hash::make('test3')],
@@ -27,7 +28,7 @@ class UsersTableSeeder extends Seeder {
         foreach ($users as $user) {
             User::create($user);
         }
-        
+        $this->command->info('USers added: '.User::count());
         $this->command->info('Users table seeded!');
     }
 

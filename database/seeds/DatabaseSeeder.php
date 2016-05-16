@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use database\seeds\UsersTableSeeder;
 use database\seeds\RolesTableSeeder;
 use database\seeds\PermissionsTableSeeder;
+use database\seeds\NotesTableSeeder;
 
 /**
  * WARNING
@@ -40,10 +41,10 @@ class DatabaseSeeder extends Seeder {
         // escalate themselves to an administrator.
         Model::unguard();
 
-        
-        $this->call(UsersTableSeeder::class);
         $this->call(RolesTableSeeder::class);
-        $this->call(PermissionsTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);        
+        $this->call(UsersTableSeeder::class);        
+        $this->call(NotesTableSeeder::class);
 
         Model::reguard();
     }
