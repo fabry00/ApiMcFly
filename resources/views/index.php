@@ -6,11 +6,24 @@
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     </head>
     <body ng-app="authApp">
-
+        <!-- Static navbar -->
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a href="#" class="navbar-brand">ApiMCFly</a>
+            </div>
+          </div><!--/.container-fluid -->
+        </nav>
+        
         <div class="container">
             <div ui-view></div>
-        </div>        
-
+        </div>
     </body>
 
     <!-- Application Dependencies -->

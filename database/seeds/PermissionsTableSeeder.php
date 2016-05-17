@@ -13,17 +13,18 @@ class PermissionsTableSeeder extends Seeder {
 
     public function run() {
         // Not needed. Db already cleaned in DatabaseSeeder.php
-        //DB::table('users')->delete(); 
+        //DB::table('users')->delete();
         $adminRole = Role::where('name', '=', 'admin')->first();
-        
-        if(empty($adminRole)) 
+
+        if(empty($adminRole))
         {
             $this->command->error(get_class($this). ":: Admin role not found");
             exit(-1);
         }
         $permissionsAdmin = array(
             ['name' => 'create-users'],
-            ['name' => 'create-roles'],            
+            ['name' => 'create-roles'],
+            ['name' => 'manage-notes'],                        
         );
 
         // Loop through each user above and create the record for them in the database

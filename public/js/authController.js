@@ -4,19 +4,29 @@
             .module('authApp')
             .controller('AuthController', AuthController);
     function AuthController($auth, $state, $http, $rootScope) {
-
         var vm = this;
 
         vm.loginError = false;
         vm.loginErrorText;
 
-        vm.login = function () {
+        vm.public_notes = [];
 
+        vm.getPublicNotes = function(){
+          // retrieve public notes
+          // this sould be provided by a service or a different module
+          $http.get('api/public_notes').then(function (response) {
+
+              console.log(response);
+              vm.public_notes = response.data;
+          });
+        };
+        vm.getPublicNotes();
+
+        vm.login = function () {
             var credentials = {
                 email: vm.email,
                 password: vm.password
             }
-
             $auth.login(credentials).then(function () {
 
                 // Return an $http request for the now authenticated

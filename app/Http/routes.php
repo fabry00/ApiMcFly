@@ -19,9 +19,10 @@ Route::get('/', function () {
 
 
 Route::group(['prefix' => 'api'], function() {
-    // Authentication route
-    Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
     Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
+    Route::get("public_notes", 'NotesController@publicNotes');
+
+    Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
 });
 
 
@@ -29,7 +30,7 @@ Route::group(['prefix' => 'api'], function() {
 // API route group that we need to protect
 // We are just saying that we need the user to be an admin or have the
 // create-users permissions before they can access the routes in this group.
-Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin,create-users']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin']], function() {
     // Protected route
     // Entrust already has a EntrutAbility that can be seen here but the
     // problem is that it works with sessions and not tokens.
@@ -37,6 +38,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin,create-users'
     // work with a token, not session.
     // php artisan make:middleware TokenEntrustAbility
     Route::get('users', 'JwtAuthenticateController@index');
+
+    Route::get('notes', 'NotesController@index');
 
     // Route to create a new role
     Route::post('role', 'JwtAuthenticateController@createRole');
