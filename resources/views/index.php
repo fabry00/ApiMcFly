@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>ApiMCFly</title>
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="css/app.css">
     </head>
     <body ng-app="authApp">
         <!-- Static navbar -->
