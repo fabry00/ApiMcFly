@@ -35,6 +35,7 @@ class NotesController extends Controller {
                                           $query->select('name', 'id');
                                       }))
                                     ->orderBy("created_at", "desc")
+                                    ->limit(10) // TODO create the pagination
                                     ->get();
 
         return response()->json($publicNotes);

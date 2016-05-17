@@ -17,10 +17,18 @@
                 <span class="icon-bar"></span>
               </button>
               <a href="#" class="navbar-brand">ApiMCFly</a>
+
             </div>
+            <ul class="nav navbar-nav navbar-right">
+                  <li ng-if="authenticated">
+                      <p class="navbar-btn">
+                          <a href="#" class="btn btn-danger" ng-click="logout()">Logout</a>
+                      </p>
+                  </li>
+              </ul>
           </div><!--/.container-fluid -->
         </nav>
-        
+
         <div class="container">
             <div ui-view></div>
         </div>

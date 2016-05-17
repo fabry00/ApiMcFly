@@ -27,7 +27,7 @@
                                 if (rejection.data.error === value) {
 
                                     // If we get a rejection corresponding to one of the reasons
-                                    // in our array, we know we need to authenticate the user so 
+                                    // in our array, we know we need to authenticate the user so
                                     // we can remove the current user from local storage
                                     localStorage.removeItem('user');
 
@@ -63,8 +63,28 @@
                             controller: 'UserController as user'
                         });
             })
-            .run(function ($rootScope, $state) {
+            .run(function ($rootScope, $state,$auth) {
 
+                // We would normally put the logout method in the same
+                // spot as the login method, ideally extracted out into
+                // a service. For this simpler example we'll leave it here
+                $rootScope.logout = function(){
+                  $auth.logout().then(function () {
+
+                      // Remove the authenticated user from local storage
+                      localStorage.removeItem('user');
+
+                      // Flip authenticated to false so that we no longer
+                      // show UI elements dependant on the user being logged in
+                      $rootScope.authenticated = false;
+
+                      // Remove the current user info from rootscope
+                      $rootScope.currentUser = null;
+
+                      // Redirect to auth (necessary for Satellizer 0.12.5+)
+                      $state.go('auth');
+                  });
+                };
                 // $stateChangeStart is fired whenever the state changes. We can use some parameters
                 // such as toState to hook into details about the state as it is changing
                 $rootScope.$on('$stateChangeStart', function (event, toState) {
