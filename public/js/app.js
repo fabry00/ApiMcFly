@@ -133,6 +133,7 @@
                   containerClass: '@containerClass',
                   notes: "=notes",
                   showPublic: "=showpublic",
+                  showattributes:"=showattributes",
                   showfavorite: "=showfavorite",
                   addToFav: '&',
                   remToFav: '&',

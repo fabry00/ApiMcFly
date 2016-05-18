@@ -32,6 +32,8 @@ Route::group(['prefix' => 'api/public'], function() {
 */
 Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']], function() {
     Route::get("user/notes", 'UserController@userNotes');
+    Route::get("user/favnotes", 'UserController@userFavNotes');
+
 });
 
 

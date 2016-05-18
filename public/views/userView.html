@@ -17,12 +17,13 @@
       <div class="panel panel-info">
         <div class="panel-heading">
           <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-          YOUR FAVORITE NOTES ({{user.user_notes.length}})
+          YOUR FAVORITE NOTES ({{user.user_fav_notes.length}})
         </div>
         <div class="panel-body">
           <div class="user_container">
             <notes-container container-class="user_container"
-                            notes="user.user_notes" showpublic="false" showfavorite="true"
+                            notes="user.user_fav_notes"
+                            showpublic="false" showfavorite="true" showattributes="true"
                             add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"></notes-container>
           </div>
         </div>
@@ -36,7 +37,8 @@
         </div>
         <div class="panel-body">
           <notes-container container-class="user_container"
-                            notes="user.user_notes" showpublic="true" showfavorite="true"
+                            notes="user.user_notes"
+                            showpublic="true" showfavorite="true" showattributes="true"
                             publish="user.publish(id)" unpublish="user.unpublish(id)"></notes-container>
         </div>
       </div>
@@ -51,7 +53,8 @@
         </div>
         <div class="panel-body">
           <div class="user_container">
-            <notes-container container-class="user_container" notes="user.public_notes" showpublic="false" showfavorite="true"></notes-container>
+            <notes-container container-class="user_container" notes="user.public_notes"
+                            showpublic="false" showfavorite="true" showattributes="false"></notes-container>
           </div>
         </div>
       </div>

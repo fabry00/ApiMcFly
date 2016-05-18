@@ -5,7 +5,15 @@
         <div class="row" style="font-size:10px;">
             <div class="col-sm-9 text-left">
               Created at: {{note.created_at}}
+              <span  ng-if="showattributes">
+                <span ng-if="note.public == 1" class="label label-primary">PUBLIC</span>
+                <span ng-if="note.pivot" class="label label-success">FAVORITE</span>
+              </span>
             </div>
+            <div class="col-sm-3 text-right" ng-if="note.user.name">
+              User owner: {{note.user.name}}
+            </div>
+
             <hr/>
         </div>
         <div class="row text-justify">
@@ -23,13 +31,13 @@
             <span  class="glyphicon glyphicon-download" aria-hidden="true"></span>
           </a>
           &nbsp;
-          <a href="" ng-if="showfavorite && note.favorite" ng-click="remToFavorite(note.id)">
+          <a href="" ng-if="showfavorite && note.pivot" ng-click="remToFavorite(note.id)">
               Remove from favorites
-              <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
-          </a>
-          <a href="" ng-if="showfavorite && !note.favorite" ng-click="addToFavorite(note.id)">
-              Add to favorites
               <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+          </a>
+          <a href="" ng-if="showfavorite && !note.pivot" ng-click="addToFavorite(note.id)">
+              Add to favorites
+              <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
           </a>
         </div>
         <hr style="border:2px solid;"/>

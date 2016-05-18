@@ -21,6 +21,13 @@
           });
         };
 
+        vm.getUserFavNotes = function(){
+          // retrieve user notes
+          // this sould be provided by a service or a different module
+          $http.get('api/auth/user/favnotes').then(function (response) {
+              vm.user_fav_notes = response.data;
+          });
+        };
         vm.getPublicNotes = function(){
           // retrieve public notes
           // this sould be provided by a service or a different module
@@ -31,10 +38,12 @@
           });
         };
 
+
+
         vm.addToFavorite = function(id){
           alert("add to fav "+id);
         };
-        
+
         vm.remToFavorite = function(id){
           alert("rem to fav "+id);
         };
@@ -52,6 +61,7 @@
         function init(){
             $rootScope.setLoading(true);
             vm.getUserNotes();
+            vm.getUserFavNotes();
             vm.getPublicNotes();
         }
         init();
