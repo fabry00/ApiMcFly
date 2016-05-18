@@ -17,11 +17,11 @@
           // retrieve public notes
           // this sould be provided by a service or a different module
 
-          $http.get('api/public/notes/count').then(function (response) {
+          /*$http.get('api/public/notes/count').then(function (response) {
 
               console.log(response);
               vm.notesCount = response.data;
-          });
+          });*/
 
           $http.get('api/public/notes/public').then(function (response) {
 

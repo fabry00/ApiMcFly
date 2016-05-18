@@ -1,4 +1,4 @@
-<div class="user_container">
+<div class="{{containerClass}}">
   <div class="col-sm-12">
     <div class="row"  ng-repeat="note in notes">
       <div class="col-sm-12">
@@ -9,17 +9,20 @@
             <hr/>
         </div>
         <div class="row text-justify">
+          <div class="col-sm-12">
             {{note.text}}
+          </div>
         </div>
         <div class="row  text-right">
-          <a href="" ng-if="showPublic && !note.isPublic" ng-click="publishNote(note.id)">
+          <a href="" ng-if="showPublic && note.public == 0" ng-click="publishNote(note.id)">
             Publish note
-            <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <span  class="glyphicon glyphicon-upload" aria-hidden="true"></span>
           </a>
-          <a href="" ng-if="showPublic && note.isPublic" ng-click="unpublishNote(note.id)">
+          <a href="" ng-if="showPublic && note.public == 1" ng-click="unpublishNote(note.id)">
             Unpublish note
-            <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            <span  class="glyphicon glyphicon-download" aria-hidden="true"></span>
           </a>
+          &nbsp;
           <a href="" ng-if="showfavorite && note.favorite" ng-click="remToFavorite(note.id)">
               Remove from favorites
               <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>

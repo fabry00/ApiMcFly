@@ -130,6 +130,7 @@
                 restrict : "E",
                 templateUrl : "/directives/notesContainer.html",
                 scope:{
+                  containerClass: '@containerClass',
                   notes: "=notes",
                   showPublic: "=showpublic",
                   showfavorite: "=showfavorite",

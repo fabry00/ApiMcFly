@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Log;
 
 use App\Models\Note;
 
@@ -42,6 +43,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function notes()
     {
+        Log::info(get_class($this) . '::notes ');
         return $this->hasMany('App\Models\Note');
     }
 

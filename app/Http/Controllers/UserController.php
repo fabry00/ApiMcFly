@@ -22,19 +22,11 @@ class UserController extends JwtAuthenticateController {
     */
     public function userNotes(Request $request){
         Log::info(get_class($this) . '::userNotes');
-        $loggedUser = $this->getAuthenticatedUser();
-        Log::info(get_class($this) . '::loggedUser '.$loggedUser);
-        $publicNotes = Note::where('public', '=', 1)
-                                    ->with(array('user' => function($query){
-                                          // You must always select the foreign
-                                          // key and primary key of the relation.
-                                          $query->select('name', 'id');
-                                      }))
-                                    ->orderBy("created_at", "desc")
-                                    ->limit(10) // TODO create the pagination
-                                    ->get();
-
-        return response()->json($publicNotes);
+        $loggedUser = $this->getUserFromToken();
+        $notes = User::find($loggedUser["id"])->notes()
+                  ->orderBy("created_at", "desc")
+                  ->get();
+        return response()->json($notes);
     }
 
 

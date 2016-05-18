@@ -1,36 +1,14 @@
 <div class="col-sm-8">
   <div class="well">
-      <h3 class="text-center"><mark>Last 10 Public notes</mark></h3>
+      <h3 class="text-center"><mark>Public notes</mark></h3>
       <div class="row text-right" >
         <div >
-          Notes: {{auth.notesCount}}
+          Notes:  ({{auth.public_notes.length}})
         </div>
       </div>
       <p/>
       <hr class="panel-info"/>
-      <div class="row auth_container">
-        <div class="col-sm-12">
-          <div class="row"  ng-repeat="note in auth.public_notes">
-            <div class="col-sm-12">
-              <div class="row" style="font-size:10px;">
-                  <div class="col-sm-9 text-left">
-                    Created at: {{note.created_at}}
-                  </div>
-                  <div class="col-sm-3  text-right">
-                    Published by: {{note.user.name}}
-                  </div>
-                  <hr/>
-              </div>
-              <div class="row">
-                <div class="col-sm-12 text-justify">
-                  {{note.text}}
-                </div>
-              </div>
-              <hr style="border:2px solid;"/>
-            </div>
-          </div>
-        </div>
-      </div>
+      <notes-container container-class="auth_container" notes="auth.public_notes" showpublic="false" showfavorite="false"></notes-container>
   </div>
 </div>
 <div class="col-sm-4">

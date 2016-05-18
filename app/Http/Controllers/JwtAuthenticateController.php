@@ -76,6 +76,21 @@ class JwtAuthenticateController extends Controller {
         return response()->json(compact('user'));
     }
 
-  
+    protected function getUserFromToken()
+    {
+      Log::info(get_class($this) . '::getUserFromToken');
+      $user = null;
+      try {
+          if (!$user = JWTAuth::parseToken()->authenticate()) {
+              return $user;
+          }
+      } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+      } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+      } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+      }
+      return $user;
+    }
+
+
 
 }

@@ -15,10 +15,14 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="panel panel-info">
-        <div class="panel-heading">YOUR FAVORITE NOTES <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></div>
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+          YOUR FAVORITE NOTES ({{user.user_notes.length}})
+        </div>
         <div class="panel-body">
           <div class="user_container">
-            <notes-container notes="user.user_notes" showpublic="false" showfavorite="true"
+            <notes-container container-class="user_container"
+                            notes="user.user_notes" showpublic="false" showfavorite="true"
                             add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"></notes-container>
           </div>
         </div>
@@ -26,9 +30,13 @@
     </div>
     <div class="col-sm-6">
       <div class="panel panel-info">
-        <div class="panel-heading">ALL YOUR NOTES  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></div>
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+          ALL YOUR NOTES  ({{user.user_notes.length}})
+        </div>
         <div class="panel-body">
-          <notes-container notes="user.user_notes" showpublic="true" showfavorite="true"
+          <notes-container container-class="user_container"
+                            notes="user.user_notes" showpublic="true" showfavorite="true"
                             publish="user.publish(id)" unpublish="user.unpublish(id)"></notes-container>
         </div>
       </div>
@@ -37,10 +45,13 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="panel panel-info">
-        <div class="panel-heading">ALL LAST 10 PUBLIC NOTES <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></div>
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+          ALL PUBLIC NOTES  ({{user.public_notes.length}})
+        </div>
         <div class="panel-body">
           <div class="user_container">
-            <notes-container notes="user.public_notes" showpublic="false" showfavorite="true"></notes-container>
+            <notes-container container-class="user_container" notes="user.public_notes" showpublic="false" showfavorite="true"></notes-container>
           </div>
         </div>
       </div>
