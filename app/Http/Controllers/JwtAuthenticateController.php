@@ -51,6 +51,7 @@ class JwtAuthenticateController extends Controller {
         }
 
         // if no errors are encountered we can return a JWT
+
         return response()->json(compact('token'));
     }
 
@@ -74,6 +75,15 @@ class JwtAuthenticateController extends Controller {
         }
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'));
+    }
+
+    public function getUserSpec(){
+      Log::info(get_class($this) . '::getUserSpec');
+      $loggedUser = $this->getUserFromToken();
+      $user_roles = User::find($loggedUser["id"])->roles()
+                                  ->with(array('perms'))
+                                  ->get();
+      return response()->json($user_roles);
     }
 
     protected function getUserFromToken()

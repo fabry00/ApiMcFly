@@ -16,6 +16,14 @@
           public : false,
           favorite : false
         }
+        vm.getUserSpec = function(){
+
+          $http.get('api/auth/user/spec').then(function (response) {
+              vm.user_spec = response.data;
+          },function (data) {
+            alert("Error: "+data.data.error);
+          });
+        }
         vm.addNote = function(){
           console.log(vm.newNote);
           if(vm.newNote == ''){
@@ -129,6 +137,7 @@
 
         function init(){
             $rootScope.setLoading(true);
+            vm.getUserSpec();
             vm.getUserNotes();
             vm.getUserFavNotes();
             vm.getPublicNotes(function(){$rootScope.setLoading(false);});

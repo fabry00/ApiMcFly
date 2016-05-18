@@ -17,10 +17,9 @@ class UsersTableSeeder extends Seeder {
         // Not needed. Db already cleaned in DatabaseSeeder.php
         //DB::table('users')->delete();
         $users = array(
-            ['name' => 'Admin',  'email' => 'admin@test.com', 'password' => Hash::make('admin')],
+            ['name' => 'Admin',  'email' => 'admin@test.com', 'password' => Hash::make('test')],
             ['name' => 'User 1', 'email' => 'user@test.com', 'password' => Hash::make('test')],
-            ['name' => 'User 2', 'email' => 'user2@test.com', 'password' => Hash::make('test2')],
-            ['name' => 'User 3', 'email' => 'user3@test.com', 'password' => Hash::make('test3')],
+            ['name' => 'User 2', 'email' => 'user2@test.com', 'password' => Hash::make('test')]
         );
 
         $adminRole = Role::where('name', '=', 'admin')->first();
@@ -31,7 +30,16 @@ class UsersTableSeeder extends Seeder {
         foreach ($users as $user) {
             $newUser = User::create($user);
             if($newUser->name == 'Admin'){
+              $this->command->info('attaching role admit to user '.$newUser->name);
               $newUser->roles()->attach($adminRole->id);
+            }
+            else if($newUser->name == 'Moderator'){
+              $this->command->info('attaching role moderator '.$moderatorRole->id.' to user '.$newUser->name);
+              $newUser->roles()->attach($moderatorRole->id);
+            }
+            else {
+              $this->command->info('attaching role user to user '.$newUser->name);
+              $newUser->roles()->attach($userRole->id);
             }
         }
 

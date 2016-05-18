@@ -17,6 +17,12 @@ use App\Models\User;
  */
 class UserController extends JwtAuthenticateController {
 
+
+    public function index() {
+      // THIS IS JUST FOR DEMO --> THIS MUST BE UNDER AUTH CONTROL
+      return response()->json(['users' => User::with('roles.perms')->get()]);
+    }
+
     /**
     * @return json all user notes
     */

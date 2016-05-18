@@ -36,7 +36,6 @@ class PermissionsTableSeeder extends Seeder {
         }
 
         $permissionUser = array(
-            ['name' => 'create-notes'],
             ['name' => 'set-fav'],
         );
 
@@ -46,10 +45,12 @@ class PermissionsTableSeeder extends Seeder {
         ) );
 
 
-        $permissionsAdmin = array_merge ($permissionModerator,array(
+        // Admin can do anything
+        $permissionsAdmin = array();
+        /*$permissionsAdmin = array_merge ($permissionModerator,array(
             ['name' => 'create-users'],
             ['name' => 'create-roles'],
-        ));
+        ));*/
 
         // Loop through each user above and create the record for them in the database
         foreach ($permissionsAdmin as $permission){

@@ -21,28 +21,36 @@ Route::get('/', function () {
 * PUBLIC ROUTES
 */
 Route::group(['prefix' => 'api/public'], function() {
-    Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
     Route::get("notes/public", 'NotesController@publicNotes');
     Route::get("notes/count", 'NotesController@notesCount');
     Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
+
+    Route::get("users/demo/list", 'UserController@index');
 });
 
 /**
 * USER AUTHENTICATED REQUIRED
 */
 Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']], function() {
+    Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
     Route::get("user/notes", 'UserController@userNotes');
     Route::get("user/favnotes", 'UserController@userFavNotes');
     Route::get("notes/public", 'NotesController@publicNotesWithUserFav');
 
-    Route::post("user/favorite", 'UserController@setFavorite');
-    Route::post("user/publish", 'UserController@publish');
+    Route::get('user/spec', 'JwtAuthenticateController@getUserSpec');
+
+    Route::post("user/favorite", ['middleware' => ['ability:admin,set-fav'],
+                                              'uses'=> 'UserController@setFavorite']);
+
+    Route::post("user/publish", ['middleware' => ['ability:admin,publish-notes'],
+                                              'uses'=> 'UserController@publish']);
 
 
-    Route::put("note", 'NotesController@createNote');
+    Route::put("note", ['middleware' => ['ability:admin,create-notes'],
+                                              'uses'=> 'NotesController@createNote']);
 
-    //Route::delete("note", 'NotesController@deleteNote');
-    Route::delete('note', ['middleware' => ['ability:moderator|admin,delete-notes'], 'uses'=> 'NotesController@deleteNote']);
+    Route::delete('note', ['middleware' => ['ability:moderator|admin,'],
+                                            'uses'=> 'NotesController@deleteNote']);
 
 });
 
@@ -59,7 +67,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin']], function(
     // What we can do is extend the JWT's middleware to include Entrust's and
     // work with a token, not session.
     // php artisan make:middleware TokenEntrustAbility
-    Route::get('users', 'UserController@index');
+    //Route::get('users', 'UserController@index');
 
     Route::get('notes', 'NotesController@index');
 

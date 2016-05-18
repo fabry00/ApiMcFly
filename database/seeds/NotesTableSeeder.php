@@ -15,10 +15,14 @@ class NotesTableSeeder extends Seeder {
     public function run() {
         $faker = Faker::create();
 
+
         $users = User::all();
-        $usersID = $users->lists('id')->toArray();
+        //$usersID = $users->lists('id')->toArray();
+        $usersID = array(1); // TODO get users with create-notes priv
 
         foreach (range(1, 50) as $index) {
+          $owner = $faker->randomElement($usersID);
+          $this->command->info('Creating note for user: '.$owner);
             Note::create([
                 'text' => $faker->Text,
                 'public' => $faker->randomElement(array(0,1)),
