@@ -31,7 +31,7 @@
         vm.getPublicNotes = function(){
           // retrieve public notes
           // this sould be provided by a service or a different module
-          $http.get('api/public/notes/public').then(function (response) {
+          $http.get('api/auth/notes/public').then(function (response) {
 
               $rootScope.setLoading(false);
               vm.public_notes = response.data;

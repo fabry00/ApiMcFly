@@ -29,12 +29,11 @@ class UserController extends JwtAuthenticateController {
         $notes = User::find($loggedUser["id"])->notes()
                   ->orderBy("created_at", "desc")
                   ->get();
-                  
+
         $allUserNotes = [];
         foreach ($notes as $note) {
           //if($note["id"])
           foreach ($userFavnotes as  $favNote) {
-              Log::info(get_class($this) . '::userNotes '.$favNote["id"]." ".$note["id"]);
             if($favNote["id"] == $note["id"] ){
               $note["pivot"] = array(
                 "user_id" => $loggedUser["id"],
