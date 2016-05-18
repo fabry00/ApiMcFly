@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder {
         }*/
 
         if (App::environment() !== 'testing') {
-            $this->truncateTables();
+            //$this->truncateTables();
         }
 
         // Model::unguard() does temporarily disable the mass assignment
