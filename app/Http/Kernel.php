@@ -52,20 +52,22 @@ class Kernel extends HttpKernel {
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        
+
         /**
          * Added to support Entrust
          * @author Fabrizio
          */
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
-        'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
-        
+        //'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+
         /**
          * Added AbilityEntrust
          * @author Fabrizio
          */
-        'ability' => 'App\Http\Middleware\TokenEntrustAbility'
+        'ability' => \App\Http\Middleware\TokenEntrustAbility::class,
+        'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
     ];
 
 }

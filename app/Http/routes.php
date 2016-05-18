@@ -17,33 +17,66 @@ Route::get('/', function () {
 });
 
 
-
-Route::group(['prefix' => 'api'], function() {
-    // Authentication route
+/**
+* PUBLIC ROUTES
+*/
+Route::group(['prefix' => 'api/public'], function() {
+    Route::get("notes/public", 'NotesController@publicNotes');
+    Route::get("notes/count", 'NotesController@notesCount');
     Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
-    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+
+    Route::get("users/demo/list", 'UserController@index');
 });
 
+/**
+* USER AUTHENTICATED REQUIRED
+*/
+Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']], function() {
+    Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
+    Route::get("user/notes", 'UserController@userNotes');
+    Route::get("user/favnotes", 'UserController@userFavNotes');
+    Route::get("notes/public", 'NotesController@publicNotesWithUserFav');
+
+    Route::get('user/spec', 'JwtAuthenticateController@getUserSpec');
+
+    Route::post("user/favorite", ['middleware' => ['ability:admin,set-fav'],
+                                              'uses'=> 'UserController@setFavorite']);
+
+    Route::post("user/publish", ['middleware' => ['ability:admin,publish-notes'],
+                                              'uses'=> 'UserController@publish']);
 
 
-// API route group that we need to protect
-// We are just saying that we need the user to be an admin or have the 
-// create-users permissions before they can access the routes in this group.
-Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin,create-users']], function() {
+    Route::put("note", ['middleware' => ['ability:admin,create-notes'],
+                                              'uses'=> 'NotesController@createNote']);
+
+    Route::delete('note', ['middleware' => ['ability:moderator|admin,'],
+                                            'uses'=> 'NotesController@deleteNote']);
+
+});
+
+/**
+ * ADMIN ROUTES
+ * API route group that we need to protect
+ * We are just saying that we need the user to be an admin or have the
+ * create-users permissions before they can access the routes in this group.
+*/
+Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin']], function() {
     // Protected route
-    // Entrust already has a EntrutAbility that can be seen here but the 
+    // Entrust already has a EntrutAbility that can be seen here but the
     // problem is that it works with sessions and not tokens.
-    // What we can do is extend the JWT's middleware to include Entrust's and 
+    // What we can do is extend the JWT's middleware to include Entrust's and
     // work with a token, not session.
     // php artisan make:middleware TokenEntrustAbility
-    Route::get('users', 'JwtAuthenticateController@index');
+    //Route::get('users', 'UserController@index');
+
+    Route::get('notes', 'NotesController@index');
 
     // Route to create a new role
-    Route::post('role', 'JwtAuthenticateController@createRole');
+    Route::post('role', 'UserController@createRole');
     // Route to create a new permission
-    Route::post('permission', 'JwtAuthenticateController@createPermission');
+    Route::post('permission', 'UserController@createPermission');
     // Route to assign role to user
-    Route::post('assign-role', 'JwtAuthenticateController@assignRole');
+    Route::post('assign-role', 'UserController@assignRole');
     // Route to attach permission to a role
-    Route::post('attach-permission', 'JwtAuthenticateController@attachPermission');
+    Route::post('attach-permission', 'UserController@attachPermission');
 });

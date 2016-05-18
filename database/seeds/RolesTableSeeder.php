@@ -13,11 +13,13 @@ class RolesTableSeeder extends Seeder {
 
     public function run() {
         // Not needed. Db already cleaned in DatabaseSeeder.php
-        //DB::table('users')->delete(); 
+        //DB::table('users')->delete();
 
-
+        $this->command->info('RolesTableSeeder starting');
         $roles = array(
-            ['name' => 'admin']
+            ['name' => 'admin'],
+            ['name' => 'moderator'],
+            ['name' => 'user']
         );
 
         // Loop through each user above and create the record for them in the database
@@ -25,6 +27,7 @@ class RolesTableSeeder extends Seeder {
             Role::create($role);
         }
 
+        $this->command->info('Roles added: '.Role::count());
         $this->command->info('Role table seeded!');
     }
 
