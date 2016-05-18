@@ -21,8 +21,10 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api'], function() {
     Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
     Route::get("public_notes", 'NotesController@publicNotes');
-
+    Route::get("user/notes", 'UserController@userNotes');
     Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
+
+
 });
 
 
@@ -37,16 +39,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin']], function(
     // What we can do is extend the JWT's middleware to include Entrust's and
     // work with a token, not session.
     // php artisan make:middleware TokenEntrustAbility
-    Route::get('users', 'JwtAuthenticateController@index');
+    Route::get('users', 'UserController@index');
 
     Route::get('notes', 'NotesController@index');
 
     // Route to create a new role
-    Route::post('role', 'JwtAuthenticateController@createRole');
+    Route::post('role', 'UserController@createRole');
     // Route to create a new permission
-    Route::post('permission', 'JwtAuthenticateController@createPermission');
+    Route::post('permission', 'UserController@createPermission');
     // Route to assign role to user
-    Route::post('assign-role', 'JwtAuthenticateController@assignRole');
+    Route::post('assign-role', 'UserController@assignRole');
     // Route to attach permission to a role
-    Route::post('attach-permission', 'JwtAuthenticateController@attachPermission');
+    Route::post('attach-permission', 'UserController@attachPermission');
 });

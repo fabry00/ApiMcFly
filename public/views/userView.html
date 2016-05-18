@@ -1,4 +1,4 @@
-<div class="col-sm-12">
+<div class="col-sm-12" ng-show="!isLoading">
   <div class="row">
     <div class="col-sm-12">
       <div class="well">
@@ -40,7 +40,38 @@
         <div class="panel-heading">ALL LAST 10 PUBLIC NOTES <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></div>
         <div class="panel-body">
           <div class="user_container">
-            Panel Content
+            <div class="col-sm-12">
+              <div class="row"  ng-repeat="note in user.public_notes">
+                <div class="col-sm-12">
+                  <div class="row" style="font-size:10px;">
+                      <div class="col-sm-9 text-left">
+                        Created at: {{note.created_at}}
+                      </div>
+                      <div class="col-sm-3  text-right">
+                        Published by: {{note.user.name}}
+                      </div>
+                      <hr/>
+                  </div>
+                  <div class="row text-justify">
+                      {{note.text}}
+                  </div>
+                  <div class="row  text-right">
+                    <a href="">
+                      <span ng-if="note.favorite">
+                        Remove from favorites
+                        <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      </span>
+                      <span ng-if="!note.favorite">
+                        Add to favorites
+                        <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                      </span>
+                    </a>
+
+                  </div>
+                  <hr style="border:2px solid;"/>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

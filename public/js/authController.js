@@ -11,6 +11,10 @@
 
         vm.public_notes = [];
 
+        $http.get('api/user/notes').then(function (response) {
+            console.log("AAAA");
+        });
+        
         vm.getPublicNotes = function(){
           // retrieve public notes
           // this sould be provided by a service or a different module

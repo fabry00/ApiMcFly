@@ -4,9 +4,11 @@
         <meta charset="utf-8">
         <title>ApiMCFly</title>
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/app.css?r=asdsd">
     </head>
     <body ng-app="authApp">
+      <div id="veil" ng-show="isLoading"></div>
+      <div id="feedLoading" ng-show="isLoading">Loading...</div>
         <!-- Static navbar -->
         <nav class="navbar navbar-default">
           <div class="container-fluid">
