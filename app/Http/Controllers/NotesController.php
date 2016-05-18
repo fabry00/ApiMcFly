@@ -40,4 +40,11 @@ class NotesController extends Controller {
 
         return response()->json($publicNotes);
     }
+
+
+    public function notesCount(Request $request) {
+      Log::info(get_class($this) . '::notesCount');
+      $number = count(Note::where('public', '=', 1)->get());
+      return response()->json($number);
+    }
 }

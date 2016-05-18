@@ -11,18 +11,26 @@
 
         vm.public_notes = [];
 
-        $http.get('api/user/notes').then(function (response) {
-            console.log("AAAA");
-        });
-        
+        $rootScope.setLoading(true);
+
         vm.getPublicNotes = function(){
           // retrieve public notes
           // this sould be provided by a service or a different module
-          $http.get('api/public_notes').then(function (response) {
+
+          $http.get('api/notes/count').then(function (response) {
+
+              console.log(response);
+              vm.notesCount = response.data;
+          });
+
+          $http.get('api/notes/public').then(function (response) {
 
               console.log(response);
               vm.public_notes = response.data;
+              $rootScope.setLoading(false);
           });
+
+
         };
         vm.getPublicNotes();
 

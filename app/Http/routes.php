@@ -20,7 +20,8 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'api'], function() {
     Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
-    Route::get("public_notes", 'NotesController@publicNotes');
+    Route::get("notes/public", 'NotesController@publicNotes');
+    Route::get("notes/count", 'NotesController@notesCount');
     Route::get("user/notes", 'UserController@userNotes');
     Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
 
