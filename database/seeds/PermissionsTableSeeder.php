@@ -55,7 +55,7 @@ class PermissionsTableSeeder extends Seeder {
             if($permissionModel == null){
               $this->command->info('Creating permission: '.$permission["name"]);
               $permissionModel = Permission::create($permission);
-            }
+            }else{continue;}
             $this->command->info('Attaching permission: '.$permission["name"]." to admin role");
             $adminRole->attachPermission($permissionModel);
         }
@@ -65,7 +65,7 @@ class PermissionsTableSeeder extends Seeder {
             if($permissionModel == null){
               $this->command->info('Creating permission: '.$permission["name"]);
               $permission = Permission::create($permission);
-            }
+            }else{continue;}
             $this->command->info('Attaching permission: '.$permission["name"]." to moderator role");
             $moderatorRole->attachPermission($permissionModel);
         }
@@ -74,7 +74,7 @@ class PermissionsTableSeeder extends Seeder {
             if($permissionModel == null){
               $this->command->info('Creating permission: '.$permission["name"]);
               $permission = Permission::create($permission);
-            }
+            }else{continue;}
             $this->command->info('Attaching permission: '.$permission["name"]." to user role");
             $userRole->attachPermission($permissionModel);
         }
