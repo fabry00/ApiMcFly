@@ -1,9 +1,7 @@
 <?php
 
 namespace database\seeds;
-
 use Illuminate\Database\Seeder;
-//use Illuminate\Support\Facades\DB;
 use App\Models\Permission;
 use App\Models\Role;
 /**
@@ -13,8 +11,7 @@ class PermissionsTableSeeder extends Seeder {
 
     public function run() {
         $this->command->info('PermissionsTableSeeder starting');
-        // Not needed. Db already cleaned in DatabaseSeeder.php
-        //DB::table('users')->delete();
+        
         $adminRole = Role::where('name', '=', 'admin')->first();
         $moderatorRole = Role::where('name', '=', 'moderator')->first();
         $userRole = Role::where('name', '=', 'user')->first();

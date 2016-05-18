@@ -6,7 +6,10 @@ use database\seeds\UsersTableSeeder;
 use database\seeds\RolesTableSeeder;
 use database\seeds\PermissionsTableSeeder;
 use database\seeds\NotesTableSeeder;
+use App\Models\User;
+use App\Models\Role;
 
+use Illuminate\Support\Facades\DB;
 /**
  * WARNING
  * If you create a new seeder class run in command line:
@@ -54,15 +57,16 @@ class DatabaseSeeder extends Seeder {
      */
     public function truncateTables()
     {
-        $dbName = env('DB_DATABASE', 'apimcfly');
-        $this->command->info('truncateTables in :'.$dbName);
-        // Get all tables list, except migrations table
-        $tables = DB::select('SHOW TABLES WHERE `Tables_in_' . $dbName . '` != ?', ['migrations']);
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        foreach ($tables as $table) {
-            DB::table($table->{'Tables_in_' . $dbName})->truncate();
-        }
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+       // User::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0'); // disable foreign key constraints
+        DB::table('users')->truncate();
+        DB::table('roles')->truncate();
+        DB::table('permissions')->truncate();
+        DB::table('notes')->truncate();
+        /*DB::table('favorite_notes')->delete();
+        DB::table('password_resets')->delete();
+        DB::table('permission_role')->delete();*/
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1'); // enable foreign key constraints
     }
 
 }

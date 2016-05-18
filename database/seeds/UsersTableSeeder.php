@@ -2,7 +2,6 @@
 namespace database\seeds;
 
 use Illuminate\Database\Seeder;
-//use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
@@ -14,8 +13,7 @@ class UsersTableSeeder extends Seeder {
 
     public function run() {
         $this->command->info('UsersTableSeeder starting');
-        // Not needed. Db already cleaned in DatabaseSeeder.php
-        //DB::table('users')->delete();
+        
         $users = array(
             ['name' => 'Admin',  'email' => 'admin@test.com', 'password' => Hash::make('test')],
             ['name' => 'User 1', 'email' => 'user@test.com', 'password' => Hash::make('test')],
