@@ -1,0 +1,31 @@
+<div class="user_container">
+  <div class="col-sm-12">
+    <div class="row"  ng-repeat="note in notes">
+      <div class="col-sm-12">
+        <div class="row" style="font-size:10px;">
+            <div class="col-sm-9 text-left">
+              Created at: {{note.created_at}}
+            </div>
+            <hr/>
+        </div>
+        <div class="row text-justify">
+            {{note.text}}
+        </div>
+        <div class="row  text-right">
+          <a href="">
+            <span ng-if="note.favorite">
+              Remove from favorites
+              <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </span>
+            <span ng-if="!note.favorite">
+              Add to favorites
+              <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            </span>
+          </a>
+
+        </div>
+        <hr style="border:2px solid;"/>
+      </div>
+    </div>
+  </div>
+</div>
