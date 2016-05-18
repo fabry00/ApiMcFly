@@ -21,7 +21,10 @@ class RolesTableSeeder extends Seeder {
         // Loop through each user above and create the record for them in the database
         foreach ($roles as $role) {
             $this->command->info('RolesTableSeeder creatintg: '.$role["name"]);
-            Role::create($role);
+            $roleModel = Role::where('name', '=', $role["name"])->first();
+            if($roleModel == null){
+                Role::create($role);
+            }
         }
 
         $this->command->info('Roles added: '.Role::count());
