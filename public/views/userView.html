@@ -1,20 +1,91 @@
-<div class="col-sm-6 col-sm-offset-3">
-    <div class="well">
-        <h5 ng-if="authenticated">Welcome, {{currentUser.name}}</h5>
-        <h3>Users</h3>
-        <div class="form-group">
-            <button class="btn btn-primary" ng-click="user.getUsers()">Get Users!</button>
-            <button class="btn btn-danger" ng-click="user.logout()">Logout</button>
-        </div>
-        <ul class="list-group" ng-if="user.users">
-            <li class="list-group-item" ng-repeat="user in user.users">
-                <h4>{{user.name}}</h4>
-                <h5>{{user.email}}</h5>
-            </li>
-        </ul>
-        <div class="alert alert-danger" ng-if="user.error">
-            <strong>There was an error: </strong> {{user.error.error}}
-            <br>Please go back and login again
-        </div>
+<div class="col-sm-12" ng-show="!isLoading">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="well">
+          <h3 ng-if="authenticated" class="text-success">
+            Welcome, {{currentUser.name}}
+          </h3>
+          <div class="alert alert-danger" ng-if="user.error">
+              <strong>There was an error: </strong> {{user.error.error}}
+              <br>Please go back and login again
+          </div>
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+          YOUR FAVORITE NOTES ({{user.user_fav_notes.length}})
+        </div>
+        <div class="panel-body">
+          <div class="user_container">
+            <notes-container container-class="user_container"
+                            notes="user.user_fav_notes"
+                            showpublic="false" showfavorite="true" showattributes="true"
+                            rem-to-fav="user.remToFavorite(id)"></notes-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+          ALL YOUR NOTES  ({{user.user_notes.length}})
+        </div>
+        <div class="panel-body">
+          <notes-container container-class="user_container"
+                            notes="user.user_notes"
+                            showpublic="true" showfavorite="true" showattributes="true" showdelete="true"
+                            add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"
+                            delete-note="user.deleteNote(id)"
+                            publish="user.publish(id)" unpublish="user.unpublish(id)"></notes-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+          ALL PUBLISHED NOTES  ({{user.public_notes.length}})
+        </div>
+        <div class="panel-body">
+          <div class="user_container">
+            <notes-container container-class="user_container" notes="user.public_notes"
+                            add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"
+                            showpublic="false" showfavorite="true" showattributes="true"></notes-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">CREATE A NOTE <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+        <div class="panel-body">
+          <div class="user_container">
+            <form>
+                <div class="form-group">
+                  <label>Insert Text</label>
+                  <textarea rows="4" cols="50" class="form-control" ng-model="user.newNote.text"></textarea>
+                </div>
+                <div class="form-group">
+                  <div class="checkbox">
+                    <label><input type="checkbox" value="" ng-model="user.newNote.public">Pusblish</label>
+                    <label><input type="checkbox" value="" ng-model="user.newNote.favorite">Favorite</label>
+                  </div>
+                </div>
+                <div class="form-group text-right">
+                  <button class="btn btn-default" ng-click="user.randomNote()">Fill random</button>
+                  <button class="btn btn-primary" ng-click="user.addNote()">Submit</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -10,40 +10,140 @@
 
         var vm = this;
 
-        vm.users;
         vm.error;
+        vm.newNote = {
+          text : "",
+          public : false,
+          favorite : false
+        }
+        vm.getUserSpec = function(){
 
-        vm.getUsers = function () {
-
-            //Grab the list of users from the API
-            $http.get('api/authenticate').success(function (users) {
-                vm.users = users;
-            }).error(function (error) {
-                vm.error = error;
-            });
+          $http.get('api/auth/user/spec').then(function (response) {
+              vm.user_spec = response.data;
+          },function (data) {
+            alert("Error: "+data.data.error);
+          });
+        }
+        vm.addNote = function(){
+          console.log(vm.newNote);
+          if(vm.newNote == ''){
+            alert("Insert text");
+            return;
+          }
+          $http.put('api/auth/note',vm.newNote).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
         }
 
-        // We would normally put the logout method in the same
-        // spot as the login method, ideally extracted out into
-        // a service. For this simpler example we'll leave it here
-        vm.logout = function () {
+        vm.getUserNotes = function(callback){
+          // retrieve user notes
+          // this sould be provided by a service or a different module
+          $http.get('api/auth/user/notes').then(function (response) {
+              vm.user_notes = response.data;
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
+        };
 
-            $auth.logout().then(function () {
+        vm.getUserFavNotes = function(callback){
+          // retrieve user notes
+          // this sould be provided by a service or a different module
+          $http.get('api/auth/user/favnotes').then(function (response) {
+              vm.user_fav_notes = response.data;
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
+        };
+        vm.getPublicNotes = function(callback){
+          // retrieve public notes
+          // this sould be provided by a service or a different module
+          $http.get('api/auth/notes/public').then(function (response) {
+              vm.public_notes = response.data;
+              if(typeof callback != 'undefined'){
+                callback();
+              }
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
+        };
 
-                // Remove the authenticated user from local storage
-                localStorage.removeItem('user');
+        vm.deleteNote = function(id){
+          $rootScope.setLoading(true);
+          $http.delete('api/auth/note',{params:{id:id}}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
+        };
 
-                // Flip authenticated to false so that we no longer
-                // show UI elements dependant on the user being logged in
-                $rootScope.authenticated = false;
 
-                // Remove the current user info from rootscope
-                $rootScope.currentUser = null;
+        vm.addToFavorite = function(id){
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/favorite',{noteid:id,fav:true}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
+        };
 
-                // Redirect to auth (necessary for Satellizer 0.12.5+)
-                $state.go('auth');
-            });
+        vm.remToFavorite = function(id){
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/favorite',{noteid:id,fav:false}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
+        };
+
+        vm.unpublish = function(id)
+        {
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/publish',{noteid:id,publish:false}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
         }
+
+        vm.publish = function(id)
+        {
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/publish',{noteid:id,publish:true}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.error);
+          });
+        }
+
+        vm.randomNote = function(){
+          vm.newNote.public = Math.random()<.5;
+          vm.newNote.favorite = Math.random()<.5;
+          var text = "USER: "+$rootScope.currentUser.name;
+          text+= " - PUBLISH: "+vm.newNote.public;
+          text+= " - FAVORITE: "+vm.newNote.favorite;
+          vm.newNote.text = text+" - STRING: "+Math.random().toString(36).slice(-8);
+        }
+
+        function init(){
+            $rootScope.setLoading(true);
+            vm.getUserSpec();
+            vm.getUserNotes();
+            vm.getUserFavNotes();
+            vm.getPublicNotes(function(){$rootScope.setLoading(false);});
+        }
+        init();
+
     }
 
 })();

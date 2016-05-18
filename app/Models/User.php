@@ -10,8 +10,11 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Log;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract 
+use App\Models\Note;
+
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
 
     use Authenticatable, CanResetPassword;
@@ -34,5 +37,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the notes for the user.
+     */
+    public function notes()
+    {
+        Log::info(get_class($this) . '::notes ');
+        return $this->hasMany('App\Models\Note');
+    }
+
+    public function favorite_notes()
+    {
+        return $this->belongsToMany('App\Models\Note', 'favorite_notes');
+    }
 
 }

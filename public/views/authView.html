@@ -1,4 +1,18 @@
-<div class="col-sm-4 col-sm-offset-4">
+<div class="col-sm-8">
+  <div class="well">
+      <h3 class="text-center"><mark>Published notes</mark></h3>
+      <div class="row text-right" >
+        <div >
+          Notes:  ({{auth.public_notes.length}})
+        </div>
+      </div>
+      <p/>
+      <hr class="panel-info"/>
+      <notes-container container-class="auth_container" notes="auth.public_notes"
+                     showattributes="false" showpublic="false" showfavorite="false"></notes-container>
+  </div>
+</div>
+<div class="col-sm-4">
     <div class="well">
         <h3>Login</h3>
         <form>
@@ -9,7 +23,27 @@
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Password" ng-model="auth.password">
             </div>
-            <button class="btn btn-primary" ng-click="auth.login()">Submit</button>
+            <div class="form-group text-right">
+              <button class="btn btn-primary" ng-click="auth.login()">Submit</button>
+            </div>
         </form>
+        <p>DEMO USERS</p>
+        <ul>
+          <li  ng-repeat="user in auth.demousers">
+            Email: {{user.email}} Password: test <br/>
+            Roles:
+            <ul>
+              <li ng-repeat="role in user.roles">
+                {{role.name}}<br/>
+                Perms: <span ng-if="role.name=='admin'">ALL</span>
+                <ul ng-if="role.name!='admin'">
+                  <li  ng-repeat="perm in role.perms">
+                    {{perm.name}}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
     </div>
 </div>

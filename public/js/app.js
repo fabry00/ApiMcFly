@@ -27,7 +27,7 @@
                                 if (rejection.data.error === value) {
 
                                     // If we get a rejection corresponding to one of the reasons
-                                    // in our array, we know we need to authenticate the user so 
+                                    // in our array, we know we need to authenticate the user so
                                     // we can remove the current user from local storage
                                     localStorage.removeItem('user');
 
@@ -47,7 +47,7 @@
                 // Push the new factory onto the $http interceptor array
                 $httpProvider.interceptors.push('redirectWhenLoggedOut');
 
-                $authProvider.loginUrl = '/api/authenticate';
+                $authProvider.loginUrl = '/api/public/authenticate';
 
                 $urlRouterProvider.otherwise('/auth');
 
@@ -63,8 +63,31 @@
                             controller: 'UserController as user'
                         });
             })
-            .run(function ($rootScope, $state) {
+            .run(function ($rootScope, $state,$auth) {
 
+                $rootScope.setLoading = function(loading) {
+			             $rootScope.isLoading = loading;
+		            }
+                // We would normally put the logout method in the same
+                // spot as the login method, ideally extracted out into
+                // a service. For this simpler example we'll leave it here
+                $rootScope.logout = function(){
+                  $auth.logout().then(function () {
+
+                      // Remove the authenticated user from local storage
+                      localStorage.removeItem('user');
+
+                      // Flip authenticated to false so that we no longer
+                      // show UI elements dependant on the user being logged in
+                      $rootScope.authenticated = false;
+
+                      // Remove the current user info from rootscope
+                      $rootScope.currentUser = null;
+
+                      // Redirect to auth (necessary for Satellizer 0.12.5+)
+                      $state.go('auth');
+                  });
+                };
                 // $stateChangeStart is fired whenever the state changes. We can use some parameters
                 // such as toState to hook into details about the state as it is changing
                 $rootScope.$on('$stateChangeStart', function (event, toState) {
@@ -101,5 +124,51 @@
                         }
                     }
                 });
-            });
+            })
+            .directive("notesContainer", function() {
+              return {
+                restrict : "E",
+                templateUrl : "/directives/notesContainer.html",
+                scope:{
+                  containerClass: '@containerClass',
+                  notes: "=notes",
+                  showPublic: "=showpublic",
+                  showattributes:"=showattributes",
+                  showfavorite: "=showfavorite",
+                  showdelete:"=showdelete",
+                  addToFav: '&',
+                  remToFav: '&',
+                  publish : '&',
+                  unpublish : '&',
+                  deleteNote : '&',
+                },
+                link: function (scope) {
+                  scope.addToFavorite = function (noteid) {
+                      console.log("addToFavorite");
+                      scope.addToFav({id: noteid});
+                  };
+                  scope.remToFavorite = function (noteid) {
+                      console.log("remToFavorite");
+                      scope.remToFav({id: noteid});
+                  };
+
+                  scope.publishNote = function (noteid) {
+                      console.log("publish");
+                      scope.publish({id: noteid});
+                  };
+
+                  scope.unpublishNote = function (noteid) {
+                      console.log("unpublish");
+                      scope.unpublish({id: noteid});
+                  };
+
+                  scope.deleteTheNote = function(noteid) {
+                      console.log("deleteTheNote");
+                      scope.deleteNote({id: noteid});
+                  }
+
+
+                }
+            };
+        });
 })();
