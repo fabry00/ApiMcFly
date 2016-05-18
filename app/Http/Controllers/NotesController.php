@@ -27,7 +27,7 @@ class NotesController extends JwtAuthenticateController {
         Log::info(get_class($this) . '::createNote ');
         $params = $request->only('text', 'public','favorite');
         if(empty($params["text"])){
-            return response()->json(array("message"=>"Unable to add note, text not found"), 400);
+            return response()->json(array("error"=>"Unable to add note, text not found"), 400);
         }
         $loggedUser = $this->getUserFromToken();
         $note = new Note();
@@ -46,7 +46,9 @@ class NotesController extends JwtAuthenticateController {
       Log::info(get_class($this) . '::deleteNote ');
       $params = $request->only('id');
       $loggedUser = $this->getUserFromToken();
-      $note = User::find($loggedUser["id"])->notes()
+
+      return response()->json(array("error"=>"Unable to delete note, note not found can:".  $user->can('manage-notes')), 400);
+    /*  $note = User::find($loggedUser["id"])->notes()
                 ->where("notes.id",$params["id"])->first();
       if($note != null){
         Log::info(get_class($this) . '::deleteNote deleting note '.$note." note to search: ".$params["id"]);
@@ -55,7 +57,7 @@ class NotesController extends JwtAuthenticateController {
       }
 
       Log::error(get_class($this) . '::deleteNopteuser isn\'t the note owner --> unable to delete');
-      return response()->json(array("message"=>"Unable to delete note, note not found"), 400);
+      return response()->json(array("error"=>"Unable to delete note, note not found"), 400);*/
     }
 
     /**

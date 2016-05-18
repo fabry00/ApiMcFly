@@ -26,7 +26,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         }
 
@@ -37,7 +37,7 @@
               vm.user_notes = response.data;
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         };
 
@@ -48,7 +48,7 @@
               vm.user_fav_notes = response.data;
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         };
         vm.getPublicNotes = function(callback){
@@ -61,7 +61,7 @@
               }
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         };
 
@@ -71,7 +71,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         };
 
@@ -82,7 +82,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         };
 
@@ -92,7 +92,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         };
 
@@ -103,7 +103,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         }
 
@@ -114,7 +114,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.data.message);
+            alert("Error: "+data.data.error);
           });
         }
 

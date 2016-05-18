@@ -41,10 +41,10 @@ Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']],
 
     Route::put("note", 'NotesController@createNote');
 
-    Route::delete("note", 'NotesController@deleteNote');
+    //Route::delete("note", 'NotesController@deleteNote');
+    Route::delete('note', ['middleware' => ['ability:moderator|admin,delete-notes'], 'uses'=> 'NotesController@deleteNote']);
+
 });
-
-
 
 /**
  * ADMIN ROUTES

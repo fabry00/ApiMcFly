@@ -65,7 +65,7 @@ class Kernel extends HttpKernel {
          * Added AbilityEntrust
          * @author Fabrizio
          */
-        'ability' => App\Http\Middleware\TokenEntrustAbility::class,
+        'ability' => \App\Http\Middleware\TokenEntrustAbility::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
     ];
