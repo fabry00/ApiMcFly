@@ -40,6 +40,8 @@ Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']],
 
 
     Route::put("note", 'NotesController@createNote');
+
+    Route::delete("note", 'NotesController@deleteNote');
 });
 
 

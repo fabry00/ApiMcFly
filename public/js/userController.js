@@ -26,7 +26,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
         }
 
@@ -37,7 +37,7 @@
               vm.user_notes = response.data;
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
         };
 
@@ -48,7 +48,7 @@
               vm.user_fav_notes = response.data;
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
         };
         vm.getPublicNotes = function(callback){
@@ -61,9 +61,20 @@
               }
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
         };
+
+        vm.deleteNote = function(id){
+          $rootScope.setLoading(true);
+          $http.delete('api/auth/note',{params:{id:id}}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.data.message);
+          });
+        };
+
 
         vm.addToFavorite = function(id){
           $rootScope.setLoading(true);
@@ -71,7 +82,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
         };
 
@@ -81,7 +92,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
         };
 
@@ -92,7 +103,7 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
         }
 
@@ -103,8 +114,17 @@
               init();
           },function (data) {
             $rootScope.setLoading(false);
-            alert("Error: "+data.message);
+            alert("Error: "+data.data.message);
           });
+        }
+
+        vm.randomNote = function(){
+          vm.newNote.public = Math.random()<.5;
+          vm.newNote.favorite = Math.random()<.5;
+          var text = "USER: "+$rootScope.currentUser.name;
+          text+= " - PUBLISH: "+vm.newNote.public;
+          text+= " - FAVORITE: "+vm.newNote.favorite;
+          vm.newNote.text = text+" - STRING: "+Math.random().toString(36).slice(-8);
         }
 
         function init(){

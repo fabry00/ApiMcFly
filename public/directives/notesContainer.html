@@ -23,23 +23,28 @@
           </div>
         </div>
         <div class="row  text-right">
-          <a href="" ng-if="showPublic && note.public == 0" ng-click="publishNote(note.id)">
-            Publish note
-            <span  class="glyphicon glyphicon-upload" aria-hidden="true"></span>
-          </a>
-          <a href="" ng-if="showPublic && note.public == 1" ng-click="unpublishNote(note.id)">
-            Unpublish note
-            <span  class="glyphicon glyphicon-download" aria-hidden="true"></span>
-          </a>
-          &nbsp;
-          <a href="" ng-if="showfavorite && note.pivot" ng-click="remToFavorite(note.id)">
-              Remove from favorites
-              <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-          </a>
-          <a href="" ng-if="showfavorite && !note.pivot" ng-click="addToFavorite(note.id)">
-              Add to favorites
-              <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
-          </a>
+          <div class="col-md-12">
+            <a href="" ng-if="showPublic && note.public == 0" ng-click="publishNote(note.id)">
+              Publish note
+              <span  class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+            </a>
+            <a href="" ng-if="showPublic && note.public == 1" ng-click="unpublishNote(note.id)">
+              Unpublish note
+              <span  class="glyphicon glyphicon-download" aria-hidden="true"></span>
+            </a>
+            &nbsp;
+            <a href="" ng-if="showfavorite && note.pivot" ng-click="remToFavorite(note.id)">
+                Remove from favorites
+                <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            </a>
+            <a href="" ng-if="showfavorite && !note.pivot" ng-click="addToFavorite(note.id)">
+                Add to favorites
+                <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </a>
+            <a href="" ng-if="showdelete" ng-click="deleteTheNote(note.id)">
+                <span  class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+          </div>
         </div>
         <hr style="border:2px solid;"/>
       </div>

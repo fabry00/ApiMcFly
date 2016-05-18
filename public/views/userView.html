@@ -38,8 +38,9 @@
         <div class="panel-body">
           <notes-container container-class="user_container"
                             notes="user.user_notes"
-                            showpublic="true" showfavorite="true" showattributes="true"
+                            showpublic="true" showfavorite="true" showattributes="true" showdelete="true"
                             add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"
+                            delete-note="user.deleteNote(id)"
                             publish="user.publish(id)" unpublish="user.unpublish(id)"></notes-container>
         </div>
       </div>
@@ -78,6 +79,7 @@
                   </div>
                 </div>
                 <div class="form-group text-right">
+                  <button class="btn btn-default" ng-click="user.randomNote()">Fill random</button>
                   <button class="btn btn-primary" ng-click="user.addNote()">Submit</button>
                 </div>
             </form>

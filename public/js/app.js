@@ -135,10 +135,12 @@
                   showPublic: "=showpublic",
                   showattributes:"=showattributes",
                   showfavorite: "=showfavorite",
+                  showdelete:"=showdelete",
                   addToFav: '&',
                   remToFav: '&',
                   publish : '&',
                   unpublish : '&',
+                  deleteNote : '&',
                 },
                 link: function (scope) {
                   scope.addToFavorite = function (noteid) {
@@ -159,6 +161,11 @@
                       console.log("unpublish");
                       scope.unpublish({id: noteid});
                   };
+
+                  scope.deleteTheNote = function(noteid) {
+                      console.log("deleteTheNote");
+                      scope.deleteNote({id: noteid});
+                  }
 
 
                 }

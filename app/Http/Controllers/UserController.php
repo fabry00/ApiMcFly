@@ -143,13 +143,13 @@ class UserController extends JwtAuthenticateController {
         return response()->json("created");
     }
 
-    private function isPublic($noteId){
+    protected function isPublic($noteId){
         Log::info(get_class($this) . '::isPublic noteid:'.$noteId);
         $note = Note::where("id",$noteId)->where('public', '=', 1)->first();
         return $note != null;
     }
 
-    private function userOwnNote($noteId, $user){
+    protected function userOwnNote($noteId, $user){
       Log::info(get_class($this) . '::userOwnNote noteid:'.$noteId);
       $note = User::find($user["id"])->notes()
                 ->where("notes.id",$noteId)
