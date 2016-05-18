@@ -3,20 +3,23 @@
     <div class="row"  ng-repeat="note in notes">
       <div class="col-sm-12">
         <div class="row" style="font-size:10px;">
-            <div class="col-sm-9 text-left">
-              Created at: {{note.created_at}}
-              <span>&nbsp;&nbsp;</span>
-              <span  ng-if="showattributes">
-                <span ng-if="note.public == 1" class="label label-primary">PUBLIC</span>
-                <span ng-if="note.pivot" class="label label-success">FAVORITE</span>
-              </span>
+            <div class="col-sm-8 text-left">
+              <span class="label label-default">Created at:</span> {{note.created_at}}
+              <span>&nbsp;&nbsp;</span>              
             </div>
-            <div class="col-sm-3 text-right" ng-if="note.user.name">
-              User owner: {{note.user.name}}
+            <div class="col-sm-4 text-right" ng-if="note.user.name">
+                <span class="label label-default">User owner:</span> {{note.user.name}}
             </div>
-
-            <hr/>
         </div>
+        <div class="row" style="font-size:10px;">
+            <div class="col-sm-12 text-left">
+                <span  ng-if="showattributes">
+                    <span ng-if="note.public == 1" class="label label-primary">PUBLIC</span>
+                    <span ng-if="note.pivot" class="label label-success">FAVORITE</span>
+                </span>
+            </div>
+        </div>
+         <hr/>
         <div class="row text-justify">
           <div class="col-sm-12">
             {{note.text}}
