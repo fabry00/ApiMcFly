@@ -37,6 +37,9 @@ Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']],
 
     Route::post("user/favorite", 'UserController@setFavorite');
     Route::post("user/publish", 'UserController@publish');
+
+
+    Route::put("note", 'NotesController@createNote');
 });
 
 

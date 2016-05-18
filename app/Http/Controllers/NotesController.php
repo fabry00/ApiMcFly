@@ -23,6 +23,23 @@ class NotesController extends JwtAuthenticateController {
         return response()->json(['notes' => Note::all()]);
     }
 
+    public function createNote(Request $request){
+        Log::info(get_class($this) . '::createNote '.$request);
+        $params = $request->only('text', 'public','favorite');
+        if(empty($params["text"])){
+            return response()->json(array("message"=>"Unable to add note, text not found"), 400);
+        }
+        $loggedUser = $this->getUserFromToken();
+        $note = new Note();
+        $note->text = $params["text"];
+        $note->user_id = $loggedUser["id"];
+        $note->public = $params["public"];
+
+        $note->save();
+        if($params["favorite"]){
+          $loggedUser->favorite_notes()->attach($note->id);
+        }
+    }
 
     /**
     * @return json all public notes

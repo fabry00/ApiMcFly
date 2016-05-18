@@ -11,7 +11,24 @@
         var vm = this;
 
         vm.error;
-        vm.public_notes = [];
+        vm.newNote = {
+          text : "",
+          public : false,
+          favorite : false
+        }
+        vm.addNote = function(){
+          console.log(vm.newNote);
+          if(vm.newNote == ''){
+            alert("Insert text");
+            return;
+          }
+          $http.put('api/auth/note',vm.newNote).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
+          });
+        }
 
         vm.getUserNotes = function(callback){
           // retrieve user notes
