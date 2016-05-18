@@ -124,5 +124,14 @@
                         }
                     }
                 });
-            });
+            })
+            .directive("notesContainer", function() {
+              return {
+                restrict : "E",
+                templateUrl : "/directives/notesContainer.html",
+                scope:{
+                  notes: "=notes"
+                }
+            };
+        });
 })();
