@@ -22,8 +22,6 @@ class UserController extends JwtAuthenticateController {
     */
     public function userNotes(Request $request){
         Log::info(get_class($this) . '::userNotes');
-        // Check user logged
-        $this->middleware('jwt.auth', ['except' => ['authenticate']]);
         $loggedUser = $this->getAuthenticatedUser();
         Log::info(get_class($this) . '::loggedUser '.$loggedUser);
         $publicNotes = Note::where('public', '=', 1)

@@ -17,13 +17,13 @@
           // retrieve public notes
           // this sould be provided by a service or a different module
 
-          $http.get('api/notes/count').then(function (response) {
+          $http.get('api/public/notes/count').then(function (response) {
 
               console.log(response);
               vm.notesCount = response.data;
           });
 
-          $http.get('api/notes/public').then(function (response) {
+          $http.get('api/public/notes/public').then(function (response) {
 
               console.log(response);
               vm.public_notes = response.data;
@@ -43,7 +43,7 @@
 
                 // Return an $http request for the now authenticated
                 // user so that we can flatten the promise chain
-                return $http.get('api/authenticate/user').then(function (response) {
+                return $http.get('api/public/authenticate/user').then(function (response) {
 
                     // Stringify the returned data to prepare it
                     // to go into local storage

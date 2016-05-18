@@ -17,22 +17,31 @@ Route::get('/', function () {
 });
 
 
-
-Route::group(['prefix' => 'api'], function() {
+/**
+* PUBLIC ROUTES
+*/
+Route::group(['prefix' => 'api/public'], function() {
     Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
     Route::get("notes/public", 'NotesController@publicNotes');
     Route::get("notes/count", 'NotesController@notesCount');
-    Route::get("user/notes", 'UserController@userNotes');
     Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
+});
 
-
+/**
+* USER AUTHENTICATED REQUIRED
+*/
+Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']], function() {
+    Route::get("user/notes", 'UserController@userNotes');
 });
 
 
 
-// API route group that we need to protect
-// We are just saying that we need the user to be an admin or have the
-// create-users permissions before they can access the routes in this group.
+/**
+ * ADMIN ROUTES
+ * API route group that we need to protect
+ * We are just saying that we need the user to be an admin or have the
+ * create-users permissions before they can access the routes in this group.
+*/
 Route::group(['prefix' => 'admin', 'middleware' => ['ability:admin']], function() {
     // Protected route
     // Entrust already has a EntrutAbility that can be seen here but the

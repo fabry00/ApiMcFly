@@ -47,7 +47,7 @@
                 // Push the new factory onto the $http interceptor array
                 $httpProvider.interceptors.push('redirectWhenLoggedOut');
 
-                $authProvider.loginUrl = '/api/authenticate';
+                $authProvider.loginUrl = '/api/public/authenticate';
 
                 $urlRouterProvider.otherwise('/auth');
 
