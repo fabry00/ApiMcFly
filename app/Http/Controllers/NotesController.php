@@ -70,7 +70,6 @@ class NotesController extends JwtAuthenticateController {
           $publicNotes[] = $note;
         }
         return response()->json($publicNotes);
-
     }
 
     public function notesCount(Request $request) {

@@ -35,6 +35,7 @@ Route::group(['prefix' => 'api/auth', 'middleware' => ['before' => 'jwt.auth']],
     Route::get("user/favnotes", 'UserController@userFavNotes');
     Route::get("notes/public", 'NotesController@publicNotesWithUserFav');
 
+    Route::post("user/favorite", 'UserController@setFavorite');
 });
 
 

@@ -13,7 +13,7 @@
         vm.error;
         vm.public_notes = [];
 
-        vm.getUserNotes = function(){
+        vm.getUserNotes = function(callback){
           // retrieve user notes
           // this sould be provided by a service or a different module
           $http.get('api/auth/user/notes').then(function (response) {
@@ -21,31 +21,36 @@
           });
         };
 
-        vm.getUserFavNotes = function(){
+        vm.getUserFavNotes = function(callback){
           // retrieve user notes
           // this sould be provided by a service or a different module
           $http.get('api/auth/user/favnotes').then(function (response) {
               vm.user_fav_notes = response.data;
           });
         };
-        vm.getPublicNotes = function(){
+        vm.getPublicNotes = function(callback){
           // retrieve public notes
           // this sould be provided by a service or a different module
           $http.get('api/auth/notes/public').then(function (response) {
-
-              $rootScope.setLoading(false);
               vm.public_notes = response.data;
+              if(typeof callback != 'undefined'){
+                callback();
+              }
           });
         };
 
-
-
         vm.addToFavorite = function(id){
-          alert("add to fav "+id);
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/favorite',{noteid:id,fav:true}).then(function (response) {
+              init();
+          });
         };
 
         vm.remToFavorite = function(id){
-          alert("rem to fav "+id);
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/favorite',{noteid:id,fav:false}).then(function (response) {
+              init();
+          });
         };
 
         vm.unpublish = function(id)
@@ -62,7 +67,7 @@
             $rootScope.setLoading(true);
             vm.getUserNotes();
             vm.getUserFavNotes();
-            vm.getPublicNotes();
+            vm.getPublicNotes(function(){$rootScope.setLoading(false);});
         }
         init();
 

@@ -59,6 +59,28 @@ class UserController extends JwtAuthenticateController {
         return response()->json($notes);
     }
 
+    /**
+    * @return json
+    */
+    public function setFavorite(Request $request){
+        Log::info(get_class($this) . '::setFavorite');
+        $loggedUser = $this->getUserFromToken();
+        $params = $request->only('noteid', 'fav');
+        if($this->isPublic($params["noteid"]) || $this->userOwnNote($params["noteid"],$loggedUser) ){
+          // Set Favorite
+          if($params['fav']){
+              User::find($loggedUser["id"])->favorite_notes()->attach($params["noteid"]);
+          }else{
+              User::find($loggedUser["id"])->favorite_notes()->detach($params["noteid"]);
+          }
+          return response()->json();
+        }
+
+        Log::error(get_class($this) . '::setFavorite the not is not public '.
+                     '. or user isn\'t the note owner --> unable to set as favorite');
+        return response()->json(array("message"=>"Unable to set note as favorite"), 400);
+    }
+
 
     public function createRole(Request $request) {
         Log::info(get_class($this) . '::createRole');
@@ -102,5 +124,19 @@ class UserController extends JwtAuthenticateController {
         $role->attachPermission($permission);
 
         return response()->json("created");
+    }
+
+    private function isPublic($noteId){
+        Log::info(get_class($this) . '::isPublic noteid:'.$noteId);
+        $note = Note::where("id",$noteId)->where('public', '=', 1)->first();
+        return $note != null;
+    }
+
+    private function userOwnNote($noteId, $user){
+      Log::info(get_class($this) . '::userOwnNote noteid:'.$noteId);
+      $note = User::find($user["id"])->notes()
+                ->where("notes.id",$noteId)
+                ->get();
+      return $note != null;
     }
 }

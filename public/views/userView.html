@@ -24,7 +24,7 @@
             <notes-container container-class="user_container"
                             notes="user.user_fav_notes"
                             showpublic="false" showfavorite="true" showattributes="true"
-                            add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"></notes-container>
+                            rem-to-fav="user.remToFavorite(id)"></notes-container>
           </div>
         </div>
       </div>
@@ -39,6 +39,7 @@
           <notes-container container-class="user_container"
                             notes="user.user_notes"
                             showpublic="true" showfavorite="true" showattributes="true"
+                            add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"
                             publish="user.publish(id)" unpublish="user.unpublish(id)"></notes-container>
         </div>
       </div>
@@ -54,6 +55,7 @@
         <div class="panel-body">
           <div class="user_container">
             <notes-container container-class="user_container" notes="user.public_notes"
+                            add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"
                             showpublic="false" showfavorite="true" showattributes="true"></notes-container>
           </div>
         </div>

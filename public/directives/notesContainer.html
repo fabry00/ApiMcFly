@@ -5,6 +5,7 @@
         <div class="row" style="font-size:10px;">
             <div class="col-sm-9 text-left">
               Created at: {{note.created_at}}
+              <span>&nbsp;&nbsp;</span>
               <span  ng-if="showattributes">
                 <span ng-if="note.public == 1" class="label label-primary">PUBLIC</span>
                 <span ng-if="note.pivot" class="label label-success">FAVORITE</span>
