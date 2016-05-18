@@ -18,7 +18,8 @@
         <div class="panel-heading">YOUR FAVORITE NOTES <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></div>
         <div class="panel-body">
           <div class="user_container">
-            <notes-container notes="user.user_notes"></notes-container>
+            <notes-container notes="user.user_notes" showpublic="false" showfavorite="true"
+                            add-to-fav="user.addToFavorite(id)" rem-to-fav="user.remToFavorite(id)"></notes-container>
           </div>
         </div>
       </div>
@@ -27,7 +28,8 @@
       <div class="panel panel-info">
         <div class="panel-heading">ALL YOUR NOTES  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></div>
         <div class="panel-body">
-          <notes-container notes="user.user_notes"></notes-container>
+          <notes-container notes="user.user_notes" showpublic="true" showfavorite="true"
+                            publish="user.publish(id)" unpublish="user.unpublish(id)"></notes-container>
         </div>
       </div>
     </div>
@@ -38,7 +40,7 @@
         <div class="panel-heading">ALL LAST 10 PUBLIC NOTES <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></div>
         <div class="panel-body">
           <div class="user_container">
-            <notes-container notes="user.public_notes"></notes-container>
+            <notes-container notes="user.public_notes" showpublic="false" showfavorite="true"></notes-container>
           </div>
         </div>
       </div>

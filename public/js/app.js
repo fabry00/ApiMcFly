@@ -130,7 +130,35 @@
                 restrict : "E",
                 templateUrl : "/directives/notesContainer.html",
                 scope:{
-                  notes: "=notes"
+                  notes: "=notes",
+                  showPublic: "=showpublic",
+                  showfavorite: "=showfavorite",
+                  addToFav: '&',
+                  remToFav: '&',
+                  publish : '&',
+                  unpublish : '&',
+                },
+                link: function (scope) {
+                  scope.addToFavorite = function (noteid) {
+                      console.log("addToFavorite");
+                      scope.addToFav({id: noteid});
+                  };
+                  scope.remToFavorite = function (noteid) {
+                      console.log("remToFavorite");
+                      scope.remToFav({id: noteid});
+                  };
+
+                  scope.publishNote = function (noteid) {
+                      console.log("publish");
+                      scope.publish({id: noteid});
+                  };
+
+                  scope.unpublishNote = function (noteid) {
+                      console.log("unpublish");
+                      scope.unpublish({id: noteid});
+                  };
+
+
                 }
             };
         });

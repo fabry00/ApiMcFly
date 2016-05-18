@@ -12,17 +12,22 @@
             {{note.text}}
         </div>
         <div class="row  text-right">
-          <a href="">
-            <span ng-if="note.favorite">
+          <a href="" ng-if="showPublic && !note.isPublic" ng-click="publishNote(note.id)">
+            Publish note
+            <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </a>
+          <a href="" ng-if="showPublic && note.isPublic" ng-click="unpublishNote(note.id)">
+            Unpublish note
+            <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+          </a>
+          <a href="" ng-if="showfavorite && note.favorite" ng-click="remToFavorite(note.id)">
               Remove from favorites
               <span  class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            </span>
-            <span ng-if="!note.favorite">
+          </a>
+          <a href="" ng-if="showfavorite && !note.favorite" ng-click="addToFavorite(note.id)">
               Add to favorites
               <span  class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-            </span>
           </a>
-
         </div>
         <hr style="border:2px solid;"/>
       </div>

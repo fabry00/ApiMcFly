@@ -31,6 +31,24 @@
           });
         };
 
+        vm.addToFavorite = function(id){
+          alert("add to fav "+id);
+        };
+        
+        vm.remToFavorite = function(id){
+          alert("rem to fav "+id);
+        };
+
+        vm.unpublish = function(id)
+        {
+          alert("unpublish "+id);
+        }
+
+        vm.publish = function(id)
+        {
+          alert("publish "+id);
+        }
+
         function init(){
             $rootScope.setLoading(true);
             vm.getUserNotes();
