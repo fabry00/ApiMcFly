@@ -18,6 +18,9 @@
           // this sould be provided by a service or a different module
           $http.get('api/auth/user/notes').then(function (response) {
               vm.user_notes = response.data;
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
           });
         };
 
@@ -26,6 +29,9 @@
           // this sould be provided by a service or a different module
           $http.get('api/auth/user/favnotes').then(function (response) {
               vm.user_fav_notes = response.data;
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
           });
         };
         vm.getPublicNotes = function(callback){
@@ -36,6 +42,9 @@
               if(typeof callback != 'undefined'){
                 callback();
               }
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
           });
         };
 
@@ -43,6 +52,9 @@
           $rootScope.setLoading(true);
           $http.post('api/auth/user/favorite',{noteid:id,fav:true}).then(function (response) {
               init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
           });
         };
 
@@ -50,17 +62,32 @@
           $rootScope.setLoading(true);
           $http.post('api/auth/user/favorite',{noteid:id,fav:false}).then(function (response) {
               init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
           });
         };
 
         vm.unpublish = function(id)
         {
-          alert("unpublish "+id);
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/publish',{noteid:id,publish:false}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
+          });
         }
 
         vm.publish = function(id)
         {
-          alert("publish "+id);
+          $rootScope.setLoading(true);
+          $http.post('api/auth/user/publish',{noteid:id,publish:true}).then(function (response) {
+              init();
+          },function (data) {
+            $rootScope.setLoading(false);
+            alert("Error: "+data.message);
+          });
         }
 
         function init(){

@@ -81,6 +81,23 @@ class UserController extends JwtAuthenticateController {
         return response()->json(array("message"=>"Unable to set note as favorite"), 400);
     }
 
+    public function publish(Request $request){
+        Log::info(get_class($this) . '::publish');
+        $loggedUser = $this->getUserFromToken();
+        $params = $request->only('noteid', 'publish');
+        if($this->userOwnNote($params["noteid"],$loggedUser) ){
+          // Set Favorite
+          $publish = $params['publish']?1:0;
+          $note = Note::find($params["noteid"]);
+          $note->public = $publish;
+          $note->save();
+          return response()->json();
+        }
+
+        Log::error(get_class($this) . '::setFavorite the not is not public '.
+                     '. or user isn\'t the note owner --> unable to set as favorite');
+        return response()->json(array("message"=>"Unable to set note as favorite"), 400);
+    }
 
     public function createRole(Request $request) {
         Log::info(get_class($this) . '::createRole');
