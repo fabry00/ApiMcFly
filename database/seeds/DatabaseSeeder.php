@@ -23,13 +23,11 @@ class DatabaseSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        /*if (App::environment() === 'production') {
+        if (App::environment() === 'production') {
             exit('We are in production mode. Cannot seed database. Can be overriden using --env attribute');
-        }*/
-
-        if (App::environment() !== 'testing') {
-            $this->truncateTables();
         }
+
+        $this->truncateTables();        
 
         // Model::unguard() does temporarily disable the mass assignment
         // protection of the model, so you can seed all model properties.
