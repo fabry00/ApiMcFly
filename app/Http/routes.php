@@ -17,24 +17,28 @@ Route::get('/', function () {
 });
 
 // API ROUTES DEFINITIONS
-Route::group(['middleware' => ['api'/*,'cors'*/],'prefix' => 'api'], function () {
+Route::group(['middleware' => ['api','cors'],'prefix' => 'api'], function () {
 
   /**
   * PUBLIC ROUTES
   */
   Route::group(['prefix' => 'public'], function() {
       // Route to get the whole PUBLISHED notes list
-      Route::get("notes/public", 'NotesController@publicNotes');
+      Route::get("notes/public",  [ 'uses' => 'NotesController@publicNotes',
+                                    'as'    => 'publicNotes']);
 
       // Route to get all the notes count
-      Route::get("notes/count", 'NotesController@notesCount');
+      Route::get("notes/count", [ 'uses' => 'NotesController@notesCount',
+                                  'as'    => 'notesCount']);
 
       // Route to authenticate a user
-      Route::post('authenticate', 'JwtAuthenticateController@authenticate', ['only' => ['index']]);
+      Route::post('authenticate', [ 'uses' => 'JwtAuthenticateController@authenticate',
+                                    'as'    => 'authenticate']);
 
       // Get the list of the users
       // This must bu under authentication, but for this demo we disabled it
-      Route::get("users/demo/list", 'UserController@index');
+      Route::get("users/demo/list", [ 'uses' => 'UserController@index',
+                                      'as'    => 'getUsers']);
   });
 
   /**
@@ -43,35 +47,44 @@ Route::group(['middleware' => ['api'/*,'cors'*/],'prefix' => 'api'], function ()
   Route::group(['prefix' => 'auth', 'middleware' => ['before' => 'jwt.auth']], function() {
 
       // Route to get the user authenticated information
-      Route::get('authenticate/user', 'JwtAuthenticateController@getAuthenticatedUser');
+      Route::get('authenticate/user',  [ 'uses' => 'JwtAuthenticateController@getAuthenticatedUser',
+                                         'as'    => 'getAuthenticatedUser']);
 
       // Route to get all the notes of the user
-      Route::get("user/notes", 'UserController@userNotes');
+      Route::get("user/notes", [ 'uses' => 'UserController@userNotes',
+                                 'as'    => 'userNotes']);
 
       // Route to get all the user favorite notes
-      Route::get("user/favnotes", 'UserController@userFavNotes');
+      Route::get("user/favnotes", [ 'uses' => 'UserController@userFavNotes',
+                                    'as'    => 'userFavNotes']);
 
       // Route to get all the user published note within the favorite property
-      Route::get("notes/public", 'NotesController@publicNotesWithUserFav');
+      Route::get("notes/public", [ 'uses' => 'NotesController@publicNotesWithUserFav',
+                                   'as'    => 'getPublicNotes']);
 
       // Route to get all the exentend information about the user
-      Route::get('user/spec', 'JwtAuthenticateController@getUserSpec');
+      Route::get('user/spec', [ 'uses' => 'JwtAuthenticateController@getUserSpec',
+                                'as'    => 'userSpec']);
 
       // Route to set a note as favorite or not
       Route::post("user/favorite", ['middleware' => ['ability:admin,set-fav'],
-                                                'uses'=> 'UserController@setFavorite']);
+                                    'uses'=> 'UserController@setFavorite',
+                                    'as' => 'setFav']);
 
       // Route to publis/unpublish a note
       Route::post("user/publish", ['middleware' => ['ability:admin,publish-notes'],
-                                                'uses'=> 'UserController@publish']);
+                                   'uses'=> 'UserController@publish',
+                                   'as' => 'publish']);
 
       // Route to create a note
       Route::put("note", ['middleware' => ['ability:admin,create-notes'],
-                                                'uses'=> 'NotesController@createNote']);
+                                           'uses'=> 'NotesController@createNote',
+                                           'as' => 'createNote']);
 
       // Route to delete a note
       Route::delete('note', ['middleware' => ['ability:moderator|admin,'],
-                                              'uses'=> 'NotesController@deleteNote']);
+                                              'uses'=> 'NotesController@deleteNote',
+                                              'as' => 'deleteNote']);
 
   });
 
