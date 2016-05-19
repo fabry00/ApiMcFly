@@ -7,6 +7,11 @@ use Illuminate\Http\Response as HttpResponse;
 //use JWTAuth;
 use App\database\ModelFactory;
 
+/**
+* TEST API
+* TODO not completed, fill it with missing tests
+* TODO split file in multple smaller files
+*/
 class ApiTest extends TestCase
 {
     // rollback the database after each test and migrate it before the next test
@@ -16,6 +21,7 @@ class ApiTest extends TestCase
     private static $userUser;
     private static $adminToken;
     private static $userToken;
+
     public function setUp()
     {
         parent::setUp();
@@ -84,28 +90,25 @@ class ApiTest extends TestCase
       $this->assertEquals(HttpResponse::HTTP_UNAUTHORIZED, $response->status());
     }
 
-
-    public function testUnautorizedApi()
+    public function testBadRequestApi()
     {
       $response =$this->call("GET", "/api/auth/authenticate/user");
-      $this->assertEquals(HttpResponse::HTTP_UNAUTHORIZED, $response->status());
+      $this->assertEquals(HttpResponse::HTTP_BAD_REQUEST, $response->status());
     }
 
-
-    public function testCreateNotUnautorized()
+    public function testCreateNoteNotUnautorized()
     {
-      /*$note = factory(App\Models\Note::class)->make();
+      $note = factory(App\Models\Note::class)->make();
       $response = $this->call(
-           'GET',
-           '/',
-           [], //parameters
+           'PUT',
+           '/api/auth/note',
+           [$note], //parameters
            [], //cookies
            [], // files
            ['HTTP_Authorization' => 'Bearer ' . self::$userToken], // server
            []
        );
-      $response =$this->call("POST", "/api/public/authenticate",$credentials);
-      $this->assertEquals(HttpResponse::HTTP_UNAUTHORIZED, $response->status());*/
+      $this->assertEquals(HttpResponse::HTTP_UNAUTHORIZED, $response->status());
     }
 
     protected function checkPublicNotes($data){
