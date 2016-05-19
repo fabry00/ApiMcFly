@@ -23,6 +23,11 @@
 
             </div>
             <ul class="nav navbar-nav navbar-right">
+                  <li >
+                      <p class="navbar-btn">
+                          <a href="/img/api.png" target="_blank" class="btn btn-success" >SHOW API ROUTES</a>
+                      </p>
+                  </li>
                   <li ng-if="authenticated">
                       <p class="navbar-btn">
                           <a href="#" class="btn btn-danger" ng-click="logout()">Logout</a>
