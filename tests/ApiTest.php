@@ -13,23 +13,31 @@ class ApiTest extends TestCase
     use DatabaseMigrations;
 
     private static $adminUser;
-
+    private static $userUser;
+    private static $adminToken;
+    private static $userToken;
     public function setUp()
     {
         parent::setUp();
         Artisan::call('migrate');
         Artisan::call('db:seed');
 
-        self::$adminUser = App\Models\User::where('name', '=', 'Admin')->first();
-    }
-    private static function getAdminUser(){
-      /*$user = factory(App\Models\User::class)->create([])->each(function($u) {
-            $u->roles()->attach(1);
-            $note = factory(App\Models\Note::class)->create([
-              "public" => 1,
-              "user_id" => $u->$this->adminRole->id
-            ]);
-      });*/
+        if(self::$adminUser == null)
+        {
+          self::$adminUser = App\Models\User::where('name', '=', 'Admin')->first();
+          self::$userUser  = App\Models\User::where('name', '=', 'User 1')->first();
+
+
+          $credentials = ['email' => 'admin@test.com','password' => 'test'];
+          $response =$this->call("POST", "/api/public/authenticate",$credentials);
+          $data = $this->parseJson($response);
+          self::$adminToken =  $data->token;
+
+          $credentials = ['email' => 'user@test.com','password' => 'test'];
+          $response =$this->call("POST", "/api/public/authenticate",$credentials);
+          $data = $this->parseJson($response);
+          self::$userToken =  $data->token;
+        }
     }
 
     /**
@@ -66,8 +74,39 @@ class ApiTest extends TestCase
       $this->assertNotEmpty($data->token);
     }
 
+    public function testAuthenticateUnSuccesfull()
+    {
+      $credentials = [
+            'email' => 'admin@test.com',
+            'password'    => 'tes111t'
+        ];
+      $response =$this->call("POST", "/api/public/authenticate",$credentials);
+      $this->assertEquals(HttpResponse::HTTP_UNAUTHORIZED, $response->status());
+    }
 
 
+    public function testUnautorizedApi()
+    {
+      $response =$this->call("GET", "/api/auth/authenticate/user");
+      $this->assertEquals(HttpResponse::HTTP_UNAUTHORIZED, $response->status());
+    }
+
+
+    public function testCreateNotUnautorized()
+    {
+      /*$note = factory(App\Models\Note::class)->make();
+      $response = $this->call(
+           'GET',
+           '/',
+           [], //parameters
+           [], //cookies
+           [], // files
+           ['HTTP_Authorization' => 'Bearer ' . self::$userToken], // server
+           []
+       );
+      $response =$this->call("POST", "/api/public/authenticate",$credentials);
+      $this->assertEquals(HttpResponse::HTTP_UNAUTHORIZED, $response->status());*/
+    }
 
     protected function checkPublicNotes($data){
       array_walk($data,function($item, $key){
