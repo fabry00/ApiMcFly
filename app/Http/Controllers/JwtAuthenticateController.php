@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response as HttpResponse;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -43,16 +44,16 @@ class JwtAuthenticateController extends Controller {
         try {
             // verify the credentials and create a token for the user
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
+                return response()->json(['error' => 'invalid_credentials'], HttpResponse::HTTP_UNAUTHORIZED);
             }
         } catch (JWTException $e) {
             // something went wrong
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['error' => 'could_not_create_token'], HttpResponse::HTTP_UNAUTHORIZED);
         }
 
         // if no errors are encountered we can return a JWT
 
-        return response()->json(compact('token'));
+        return response()->json(compact('token'), HttpResponse::HTTP_ACCEPTED);
     }
 
     /**
